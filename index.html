@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free SXR Files</title>
+  <style>
+    :root {
+      --bg: #05070d;
+      --panel: rgba(12, 18, 28, 0.78);
+      --panel-2: rgba(17, 25, 40, 0.88);
+      --text: #f6fff9;
+      --muted: #9caeaa;
+      --line: rgba(110, 255, 174, 0.14);
+      --green: #42ff9e;
+      --green-2: #00d978;
+      --cyan: #38d9ff;
+      --yellow: #ffd166;
+      --danger: #ff5c8a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body.loaded .preloader {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    a { color: inherit; }
+
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: grid;
+      place-items: center;
+      background: #030504;
+      transition: 0.5s ease;
+    }
+
+    .loader-box {
+      width: min(440px, calc(100% - 40px));
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(10, 18, 15, 0.86);
+      border: 1px solid rgba(66,255,158,0.2);
+      box-shadow: 0 0 80px rgba(66,255,158,0.12);
+      text-align: center;
+    }
+
+    .loader-box h2 {
+      margin-bottom: 12px;
+      letter-spacing: -0.04em;
+    }
+
+    .loader-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .loader-bar span {
+      display: block;
+      height: 100%;
+      width: 55%;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      animation: loading 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes loading {
+      from { transform: translateX(-80%); }
+      to { transform: translateX(180%); }
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(66, 255, 158, 0.18), transparent 30%),
+        radial-gradient(circle at 80% 12%, rgba(56, 217, 255, 0.14), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(0, 217, 120, 0.12), transparent 32%),
+        #05070d;
+    }
+
+    .bg::before,
+    .bg::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.8;
+    }
+
+    .bg::before {
+      width: 520px;
+      height: 520px;
+      top: -160px;
+      left: -110px;
+      background: rgba(66, 255, 158, 0.2);
+      animation: floatA 12s ease-in-out infinite alternate;
+    }
+
+    .bg::after {
+      width: 560px;
+      height: 560px;
+      right: -180px;
+      bottom: -180px;
+      background: rgba(56, 217, 255, 0.13);
+      animation: floatB 14s ease-in-out infinite alternate;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+      animation: gridMove 22s linear infinite;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(66,255,158,0.35) 1px, transparent 1.5px);
+      background-size: 130px 130px, 210px 210px;
+      background-position: 0 0, 70px 90px;
+      opacity: 0.22;
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      left: var(--mouse-x, 50%);
+      top: var(--mouse-y, 50%);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(66,255,158,0.13), transparent 62%);
+      z-index: 1;
+      pointer-events: none;
+      transition: 0.08s linear;
+    }
+
+    @keyframes floatA {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(120px, 90px) scale(1.12); }
+    }
+
+    @keyframes floatB {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(-110px, -70px) scale(1.16); }
+    }
+
+    @keyframes gridMove {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 52px 52px, 52px 52px; }
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.12; transform: scale(1); }
+      to { opacity: 0.28; transform: scale(1.02); }
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      width: min(1180px, calc(100% - 32px));
+      margin: 18px auto 0;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      border-radius: 999px;
+      background: rgba(5, 8, 13, 0.78);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      color: #04120a;
+      font-weight: 900;
+      box-shadow: 0 0 28px rgba(66,255,158,0.2);
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #d9fff0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0.82;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    .nav-cta {
+      opacity: 1;
+      background: rgba(66,255,158,0.1);
+      border: 1px solid rgba(66,255,158,0.18);
+    }
+
+    .hero {
+      width: min(1180px, calc(100% - 32px));
+      min-height: calc(100vh - 82px);
+      margin: 0 auto;
+      padding: 86px 0 72px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      background: rgba(66,255,158,0.08);
+      border: 1px solid rgba(66,255,158,0.18);
+      color: #baffd8;
+      font-size: 14px;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(66,255,158,0.11), 0 0 18px rgba(66,255,158,0.85);
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 86px);
+      line-height: 0.96;
+      letter-spacing: -0.07em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p,
+    .section-desc,
+    .file-card p,
+    .info-box p {
+      color: var(--muted);
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    .download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: 0.22s;
+      cursor: pointer;
+    }
+
+    .btn-primary,
+    .download {
+      color: #04120a;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      box-shadow: 0 18px 45px rgba(66,255,158,0.14);
+    }
+
+    .btn-secondary {
+      color: #d9fff0;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+    }
+
+    .btn:hover,
+    .download:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.08);
+    }
+
+    .dashboard { position: relative; }
+
+    .float-card {
+      position: absolute;
+      z-index: 3;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(5, 8, 13, 0.8);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.38);
+      animation: cardFloat 4s ease-in-out infinite alternate;
+    }
+
+    .float-card.top { top: -24px; right: 20px; }
+    .float-card.bottom { left: -18px; bottom: 34px; animation-delay: -2s; }
+    .float-card strong { display: block; font-size: 20px; color: var(--green); }
+    .float-card small { color: var(--muted); }
+
+    @keyframes cardFloat {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .hero-panel,
+    .file-card,
+    .info-box,
+    .contact-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.38);
+    }
+
+    .hero-panel {
+      overflow: hidden;
+      border-radius: 34px;
+    }
+
+    .panel-top {
+      padding: 18px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: #ff5f56;
+    }
+    .dot:nth-child(2) { background: #ffbd2e; }
+    .dot:nth-child(3) { background: #27c93f; }
+
+    .panel-body { padding: 24px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card,
+    .mini-file,
+    .pill {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid var(--line);
+    }
+
+    .stat-card {
+      padding: 16px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 24px;
+      color: var(--green);
+    }
+
+    .stat-card span,
+    .mini-file p,
+    .file-meta,
+    footer {
+      color: var(--muted);
+    }
+
+    .live-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--line);
+      color: #dfffea;
+      font-size: 14px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .update-banner {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(66,255,158,0.1), rgba(56,217,255,0.08));
+      border: 1px solid var(--line);
+      margin-bottom: 18px;
+      color: #dfffea;
+      font-size: 14px;
+    }
+
+    .update-banner span { color: var(--green); font-weight: 800; }
+
+    .mini-files { display: grid; gap: 12px; }
+
+    .mini-file {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 20px;
+    }
+
+    .mini-left { display: flex; align-items: center; gap: 12px; }
+    .mini-file h3 { font-size: 15px; }
+
+    .file-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(66,255,158,0.16), rgba(56,217,255,0.13));
+      border: 1px solid var(--line);
+    }
+
+    .status,
+    .tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #caffdc;
+      background: rgba(66,255,158,0.1);
+      border: 1px solid rgba(66,255,158,0.18);
+      white-space: nowrap;
+    }
+
+    .tag.soon,
+    .status.soon {
+      color: #ffe6ad;
+      background: rgba(255,209,102,0.1);
+      border-color: rgba(255,209,102,0.2);
+    }
+
+    section {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 76px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      margin-bottom: 12px;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      padding: 10px 13px;
+      border-radius: 999px;
+      color: #caffdc;
+      font-size: 13px;
+    }
+
+    .files {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .file-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      border-radius: 28px;
+      padding: 24px;
+      transition: 0.24s;
+    }
+
+    .file-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(circle at top right, rgba(66,255,158,0.15), transparent 35%);
+      pointer-events: none;
+    }
+
+    .file-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(66,255,158,0.32);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .file-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .file-card h3 {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .file-card p {
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .file-meta {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      margin-top: auto;
+      margin-bottom: 18px;
+    }
+
+    .download {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 16px;
+    }
+
+    .download[href="#"] {
+      color: #b7c9c2;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info-box {
+      border-radius: 28px;
+      padding: 28px;
+    }
+
+    .info-box h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 28px;
+      border-radius: 30px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 50;
+      max-width: 340px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      color: #dfffea;
+      background: rgba(5, 8, 13, 0.86);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast strong {
+      color: var(--green);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    footer {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 44px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .info-grid,
+      .contact-card { grid-template-columns: 1fr; }
+      .files { grid-template-columns: 1fr 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .filter-pills { justify-content: flex-start; }
+    }
+
+    @media (max-width: 680px) {
+      header { border-radius: 26px; align-items: flex-start; flex-direction: column; }
+      nav { width: 100%; overflow-x: auto; padding-bottom: 2px; }
+      .hero { padding-top: 54px; }
+      .hero h1 { letter-spacing: -0.055em; }
+      .files, .stats-grid { grid-template-columns: 1fr; }
+      .float-card { display: none; }
+      footer { flex-direction: column; }
+      .toast { left: 16px; right: 16px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader">
+    <div class="loader-box">
+      <h2>Free SXR Loading...</h2>
+      <p>Preparing download panel</p>
+      <div class="loader-bar"><span></span></div>
+    </div>
+  </div>
+
+  <div class="bg"></div>
+  <div class="grid"></div>
+  <div class="stars"></div>
+  <div class="cursor-glow"></div>
+
+  <header>
+    <div class="brand">
+      <span class="brand-mark">S</span>
+      <span>Free SXR</span>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#files">File</a>
+      <a href="#info">Info</a>
+      <a class="nav-cta" href="#kontak">Kontak</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow"><span class="pulse"></span> File gratis siap download</div>
+        <h1>Download <span class="gradient-text">Free SXR</span> dengan tampilan premium.</h1>
+        <p>Tempat download Dragxit Headlock SXR dan Special Body Headshot dengan layout clean, cepat, dan nyaman dipakai di semua device.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#files">Lihat File →</a>
+          <a class="btn btn-secondary" href="#info">Baca Info</a>
+        </div>
+      </div>
+
+      <div class="dashboard">
+        <div class="float-card top"><strong>100%</strong><small>Free access</small></div>
+        <div class="float-card bottom"><strong>6</strong><small>File tersedia</small></div>
+        <div class="hero-panel">
+          <div class="panel-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="panel-body">
+            <div class="stats-grid">
+              <div class="stat-card"><strong id="downloadCount">12K+</strong><span>Total Download</span></div>
+              <div class="stat-card"><strong>6</strong><span>Available Files</span></div>
+              <div class="stat-card"><strong>24/7</strong><span>Online Access</span></div>
+            </div>
+            <div class="live-row">
+              <span><span class="live-dot"></span><span id="liveUsers">128</span> users online</span>
+              <span>Server: Stable</span>
+            </div>
+            <div class="update-banner"><span>Latest Update:</span> Dragxit Headlock SXR Version 1–6 tersedia via MediaFire.</div>
+            <div class="mini-files">
+              <div class="mini-file"><div class="mini-left"><div class="file-icon">📦</div><div><h3>Dragxit Headlock SXR V1</h3><p>MediaFire download</p></div></div><span class="status">Active</span></div>
+              <div class="mini-file"><div class="mini-left"><div class="file-icon">⚡</div><div><h3>Dragxit Headlock SXR V2</h3><p>MediaFire download</p></div></div><span class="status">New</span></div>
+              <div class="mini-file"><div class="mini-left"><div class="file-icon">🛡️</div><div><h3>Dragxit Headlock SXR V3</h3><p>MediaFire download</p></div></div><span class="status">Free</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="files">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Daftar File</h2>
+          <p class="section-desc">Download Dragxit Headlock SXR dari Version 1 sampai Version 6 melalui link MediaFire.</p>
+        </div>
+        <div class="filter-pills"><span class="pill">Available</span><span class="pill">MediaFire</span><span class="pill">Coming Soon</span></div>
+      </div>
+
+      <div class="files">
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">🔥</div><span class="tag">V1</span></div>
+            <h3>Dragxit Headlock SXR Version 1</h3>
+            <p>Part pertama dari file Dragxit Headlock SXR. Klik tombol untuk download via MediaFire.</p>
+            <div class="file-meta"><span>Version 1</span><span>•</span><span>MediaFire</span></div>
+            <a class="download" href="https://www.mediafire.com/file/mvyc2spzgeiasuv/Dragxit+headlock+sxr+version+1+©sxrsetting.zip/file" target="_blank" rel="noopener">Download via MediaFire</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">⚡</div><span class="tag">V2</span></div>
+            <h3>Dragxit Headlock SXR Version 2</h3>
+            <p>Part kedua dari file Dragxit Headlock SXR. Link MediaFire sudah aktif.</p>
+            <div class="file-meta"><span>Version 2</span><span>•</span><span>MediaFire</span></div>
+            <a class="download" href="https://www.mediafire.com/file/dcsp4aplhsevw6q/Dragxit+headlock+sxr+version+2+©sxrsetting.zip/file" target="_blank" rel="noopener">Download via MediaFire</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">🧩</div><span class="tag">V3</span></div>
+            <h3>Dragxit Headlock SXR Version 3</h3>
+            <p>Part ketiga dari file Dragxit Headlock SXR. Cocok untuk seri file download.</p>
+            <div class="file-meta"><span>Version 3</span><span>•</span><span>MediaFire</span></div>
+            <a class="download" href="https://www.mediafire.com/file/r4zjf09vfk7lkd9/Dragxit+headlock+sxr+version+3+©sxrsetting.zip/file" target="_blank" rel="noopener">Download via MediaFire</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">🚀</div><span class="tag soon">SOON</span></div>
+            <h3>Dragxit Headlock SXR Version 4</h3>
+            <p>Part keempat belum tersedia dan akan segera diupdate.</p>
+            <div class="file-meta"><span>Version 4</span><span>•</span><span>Coming Soon</span></div>
+            <a class="download" href="#">Coming Soon</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">💎</div><span class="tag soon">SOON</span></div>
+            <h3>Dragxit Headlock SXR Version 5</h3>
+            <p>Part kelima belum tersedia dan akan segera diupdate.</p>
+            <div class="file-meta"><span>Version 5</span><span>•</span><span>Coming Soon</span></div>
+            <a class="download" href="#">Coming Soon</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">👑</div><span class="tag soon">SOON</span></div>
+            <h3>Dragxit Headlock SXR Version 6</h3>
+            <p>Part keenam belum tersedia dan akan segera diupdate.</p>
+            <div class="file-meta"><span>Version 6</span><span>•</span><span>Coming Soon</span></div>
+            <a class="download" href="#">Coming Soon</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="special-headshot">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Special Body Headshot</h2>
+          <p class="section-desc">Koleksi special body headshot dengan tampilan premium dan link download MediaFire.</p>
+        </div>
+        <div class="filter-pills"><span class="pill">Available</span><span class="pill">Special Pack</span><span class="pill">Coming Soon</span></div>
+      </div>
+
+      <div class="files">
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">🎯</div><span class="tag">V1</span></div>
+            <h3>Special Body Headshot Version 1</h3>
+            <p>Special body headshot pack pertama dengan kualitas premium dan akses gratis.</p>
+            <div class="file-meta"><span>Version 1</span><span>•</span><span>MediaFire</span></div>
+            <a class="download" href=https://www.mediafire.com/file/uz79gf8844af09c/BodyHeadshot+©skyCheatX.zip/file" target="_blank" rel="noopener">Download via MediaFire</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">💥</div><span class="tag soon">SOON</span></div>
+            <h3>Special Body Headshot Version 2</h3>
+            <p>Versi kedua belum tersedia dan akan segera diupdate.</p>
+            <div class="file-meta"><span>Version 2</span><span>•</span><span>Coming Soon</span></div>
+            <a class="download" href="#">Coming Soon</a>
+          </div>
+        </article>
+
+        <article class="file-card">
+          <div class="card-content">
+            <div class="file-top"><div class="file-icon">👑</div><span class="tag soon">SOON</span></div>
+            <h3>Special Body Headshot Version 3</h3>
+            <p>Versi ketiga belum tersedia dan akan segera diupdate.</p>
+            <div class="file-meta"><span>Version 3</span><span>•</span><span>Coming Soon</span></div>
+            <a class="download" href="#">Coming Soon</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="info">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Info Penting</h2>
+          <p class="section-desc">Tambahkan catatan untuk pengunjung agar website terlihat lebih aman dan terpercaya.</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><h3>Gratis Digunakan</h3><p>Semua file yang tersedia di halaman ini bisa diunduh secara gratis tanpa biaya tambahan.</p></div>
+        <div class="info-box"><h3>Catatan Keamanan</h3><p>Pastikan file yang dibagikan aman, legal, dan tidak melanggar hak cipta pihak lain.</p></div>
+      </div>
+    </section>
+
+    <section id="kontak">
+      <div class="contact-card">
+        <div>
+          <h2 class="section-title">Ada link rusak?</h2>
+          <p class="section-desc">Hubungi admin untuk request file baru atau melaporkan masalah download.</p>
+        </div>
+        <a class="btn btn-primary" href="mailto:emailkamu@example.com">emailkamu@example.com</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">
+    <strong>Download dibuka</strong>
+    <span>Link MediaFire akan terbuka di tab baru.</span>
+  </div>
+
+  <footer>
+    <span>© 2026 Free SXR. All rights reserved.</span>
+    <span>Made for free file sharing.</span>
+  </footer>
+
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        document.body.classList.add('loaded');
+      }, 650);
+    });
+
+    document.addEventListener('mousemove', function (event) {
+      document.body.style.setProperty('--mouse-x', event.clientX + 'px');
+      document.body.style.setProperty('--mouse-y', event.clientY + 'px');
+    });
+
+    const liveUsers = document.getElementById('liveUsers');
+    setInterval(function () {
+      const randomUsers = Math.floor(Math.random() * 38) + 105;
+      liveUsers.textContent = randomUsers;
+    }, 2600);
+
+    const toast = document.getElementById('toast');
+    const downloadButtons = document.querySelectorAll('.download[target="_blank"]');
+
+    downloadButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        toast.classList.add('show');
+        setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2600);
+      });
+    });
+  </script>
+</body>
+</html>
